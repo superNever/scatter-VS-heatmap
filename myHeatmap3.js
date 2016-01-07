@@ -1,6 +1,6 @@
 /**
- * 1增加缓存区2增加分批加载3增加heatmap覆盖层
- * 
+ * @author:supernever
+ * @version:1.0.0
  */
 (function(){
 	//制定一系列工具函数
@@ -196,7 +196,31 @@
 				offsetTOP:spanMaxY,
 				offsetLEFT:spanMaxX
 			};
-
+		},
+		//直接读取series数据并组成是heatmap样式数据
+		getDataFromSeries:function(myChart){
+			var dataArr = myChart.getSeries()[0].data;//原始数据
+			var llArr = [];
+			this.each(dataArr,function(k,v){
+				var obj = {};
+				obj.x = v[0];
+				obj.y = v[1];
+				llArr.push(obj);
+			})
+			return llArr;
+		},
+		/*此方法为宏命令，直接由散点生成heatmap覆盖层*/
+		init:function(myChart){
+			var extent = mHeatMap.util.getEchartsExtent(myChart);
+			//创建新的覆盖层
+			var data = mHeatMap.util.getDataFromSeries(myChart);
+			var newCanvasId = mHeatMap.util.createOverLayCanvas(extent,myChart.dom.id,data);
+			//格式化数据
+			var exportData = mHeatMap.util.formatData(data,extent.width,extent.height,extent.chartMaxX,extent.chartMax,extent.chartMinX,extent.chartMin);
+			return {
+				id:newCanvasId,
+				data:exportData.data
+			}
 		},
 		/*each*/
 		each:function(data,callback){
@@ -298,7 +322,6 @@
 		this.data = util.isDef(options.data)?options.data:null;
 		this.initialize(options);		
 	}
-
 	//初始化heatmap
 	mHeatMap.prototype.initialize = function(options){
 		this.setContext(this.canvasID);
