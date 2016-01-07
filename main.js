@@ -1,14 +1,13 @@
 var init = (function(){
 
 	//随机生成一系列的坐标
-	var llArr = [],dataArr=[];		
+	var dataArr=[];		
 	for(var i =0 ;i<5000;i++){
 		var obj  ={};
 		obj.x = 413*Math.random();
 		obj.y = 814*Math.random();
 		obj.count = 10*Math.random();
 		dataArr.push([obj.x,obj.y]);
-		llArr.push(obj);
 	}
 	// var heat = new mHeatMap({id:'heatmap',data:''});
 	//以下代码仅用于对于测试，真正插件使用不存在以下代码，
@@ -94,13 +93,9 @@ var init = (function(){
 			    ]
 			};                 
 	myChart.setOption(option);
-
-	//以下代码用于生成匹配的热力图
-	var extent = mHeatMap.util.getEchartsExtent(myChart);
-	//创建新的覆盖层
-	var newCanvasId = mHeatMap.util.createOverLayCanvas(extent,'echarts',llArr);
-	//格式化数据
-	var exportData = mHeatMap.util.formatData(llArr,extent.width,extent.height,extent.chartMaxX,extent.chartMax,extent.chartMinX,extent.chartMin);
+	/*如果默认开始就需要加载heatmap请如下写法，如果不需要默认加载，请单独做事件进行下面的触发*/
+	//初始化数据
+	var dataObj = mHeatMap.util.init(myChart);
 	//展示数据
-	var heat1 = new mHeatMap({id:newCanvasId,data:exportData.data});
+	var heat1 = new mHeatMap({id:dataObj.id,data:dataObj.data});
 })
