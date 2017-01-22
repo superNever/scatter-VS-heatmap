@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>heatmap</title>
+	<meta charset='utf-8'>
+	<script src='myHeatmap3.js'></script>
+	<script src='https://github.com/ecomfe/echarts/blob/master/dist/echarts.min.js'></script>    //根据自己的echarts位置 自行引用
+	<script src='main.js'></script>
+	<style>
+	*{
+		margin:1px;
+	}
+		#heatmap,#heatmap1{
+			width:800px;
+			height:500px;
+			border:1px solid #ccc;
+			float: left;
+		}
+	</style>
+</head>
+<body onload='init()'>
+	<div id='echarts' style='width:800px;height:500px;border:1px solid #f00;float:left;'></div>
+</body>
+</html>
