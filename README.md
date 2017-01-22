@@ -1,3 +1,2 @@
 # scatter-VS-heatmap
-scatter and heatmap
-echarts-all.js 自己引用
+提供直接将scatter转为 heatmap
